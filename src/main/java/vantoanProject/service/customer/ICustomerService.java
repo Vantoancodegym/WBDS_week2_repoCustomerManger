@@ -1,4 +1,4 @@
-package vantoanProject.service;
+package vantoanProject.service.customer;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

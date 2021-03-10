@@ -1,4 +1,4 @@
-package vantoanProject.service;
+package vantoanProject.service.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,11 @@ import vantoanProject.repository.CustomerRepository;
 
 import java.util.List;
 
-@Service
+@Service("cus")
 public class CustomerService implements ICustomerService{
+    public CustomerService() {
+    }
+
     @Autowired
     private CustomerRepository customerRepository;
 

@@ -1,4 +1,4 @@
-package vantoanProject.service;
+package vantoanProject.service.province;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,9 +6,11 @@ import vantoanProject.model.Province;
 import vantoanProject.repository.ProvinceRepository;
 
 import java.util.List;
-
-@Service
+@Service("prov")
 public class ProvinceService implements IProvinceService{
+    public ProvinceService() {
+    }
+
     @Autowired
     public ProvinceRepository provinceRepository;
     @Override

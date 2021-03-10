@@ -95,6 +95,7 @@
             <div class="line"></div>
         </div>
     </label>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
     <label>
         <p class="label-txt"></p>
         <input type="text" class="input" th:field="*{phone}">
@@ -102,6 +103,7 @@
             <div class="line"></div>
         </div>
     </label>
+    <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
     <label>
         <p class="label-txt"></p>
         <select th:field="*{province}">

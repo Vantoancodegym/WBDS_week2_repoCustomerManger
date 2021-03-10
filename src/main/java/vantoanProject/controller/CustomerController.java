@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import vantoanProject.model.Customer;
@@ -48,14 +49,18 @@ public class CustomerController {
         return new ModelAndView("redirect:/customers");
     }
     @GetMapping("create")
-    public ModelAndView showFormCreate(@ModelAttribute Customer customer ){
-        ModelAndView modelAndView=new ModelAndView("create","customer",customer);
+    public ModelAndView showFormCreate(){
+        ModelAndView modelAndView=new ModelAndView("create","customer",new Customer());
         return modelAndView;
     }
     @PostMapping("create")
-    public ModelAndView create(@ModelAttribute Customer customer){
-        iCustomerService.save(customer);
-        return new ModelAndView("redirect:/customers");
+    public ModelAndView create(@Validated @ModelAttribute Customer customer, BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()){
+            return new ModelAndView("create","customer",customer);}
+        else {
+            iCustomerService.save(customer);
+            return new ModelAndView("redirect:/customers");
+        }
     }
     @GetMapping("delete")
     public ModelAndView delete(@RequestParam Long id){
@@ -67,7 +72,5 @@ public class CustomerController {
         List<Customer> customerList= iCustomerService.findByProvince(province_id);
         return new ModelAndView("search","customerList",customerList);
     }
-
-
 
 }

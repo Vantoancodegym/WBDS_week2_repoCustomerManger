@@ -1,13 +1,21 @@
 package vantoanProject.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
+    @Size(min = 2, max = 30, message = "nam is invalid")
     private String name;
+    @NotEmpty
+    @Pattern(regexp="(^$|[0-9]{10})", message = "phone is invalid")
     private String phone;
     @ManyToOne
     private Province province;

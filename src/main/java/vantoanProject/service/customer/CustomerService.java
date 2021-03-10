@@ -29,7 +29,7 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+        return customerRepository.findAllQuery(pageable);
     }
 
     @Override

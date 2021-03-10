@@ -28,7 +28,8 @@ public class CustomerController {
     @GetMapping("")
     public ModelAndView showAll(@PageableDefault(size = 3)Pageable pageable){
         Page<Customer> list= iCustomerService.findAll(pageable);
-        return new ModelAndView("home","list",list);
+        ModelAndView modelAndView= new ModelAndView("home","list",list);
+        return modelAndView;
     }
     @ModelAttribute("provinces")
     public List<Province> getListProvices(){
@@ -56,6 +57,17 @@ public class CustomerController {
         iCustomerService.save(customer);
         return new ModelAndView("redirect:/customers");
     }
+    @GetMapping("delete")
+    public ModelAndView delete(@RequestParam Long id){
+        iCustomerService.delete(id);
+        return new ModelAndView("redirect:/customers");
+    }
+    @PostMapping("search")
+    public ModelAndView search(@RequestParam Long province_id){
+        List<Customer> customerList= iCustomerService.findByProvince(province_id);
+        return new ModelAndView("search","customerList",customerList);
+    }
+
 
 
 }

@@ -14,5 +14,5 @@ public interface ICustomerService {
     Customer save(Customer customer);
     Customer findById(Long id);
     void delete(Long id);
-    List<Customer> findByProvince(Province province);
+    List<Customer> findByProvince(Long province_id);
 }

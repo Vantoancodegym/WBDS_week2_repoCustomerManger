@@ -10,14 +10,6 @@
 <body>
 <div class="container">
     <div class="row col-md-6 col-md-offset-2 custyle">
-        <form method="post" action="/customers/search" >
-            <select name="province_id">
-                <th:block th:each="p:${provinces}">
-                    <option th:value="${p.getId()}" th:text="${p.getName()}"></option>
-                </th:block>
-            </select>
-            <button type="submit">Search</button>
-        </form>
         <table class="table table-striped custab">
             <thead>
             <a href="/customers/create" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
@@ -28,20 +20,14 @@
                 <th class="text-center">Action</th>
             </tr>
             </thead>
-            <th:block th:each="cus: ${list}">
+            <th:block th:each="cus: ${customerList}">
                 <tr>
                     <td th:text="${cus.name}"></td>
                     <td th:text="${cus.phone}"></td>
                     <td th:text="${cus.province.getName()}"></td>
-                    <td class="text-center"><a class='btn btn-info btn-xs' th:href="@{/customers/edit(id=${cus.getId()})}" ><span class="glyphicon glyphicon-edit"></span> Edit</a> <a onclick="return confirm('are you sure?')" th:href="@{/customers/delete(id=${cus.getId()})}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
             </th:block>
         </table>
-        <div>
-            <a th:href="@{'/customers'(page=${list.number - 1})}" th:if="${list.hasPrevious()}">Previous</a>
-            <span th:text="${list.number + 1}"></span>/<span th:text="${list.totalPages}"></span>
-            <a th:href="@{'/customers'(page=${list.number + 1})}" th:if="${list.hasNext()}">Next</a>
-        </div>
     </div>
 </div>
 </body>

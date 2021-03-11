@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import vantoanProject.exception.DuplicatePhoneException;
 import vantoanProject.exception.NotFoundException;
 import vantoanProject.model.Customer;
 import vantoanProject.model.Province;
@@ -34,6 +35,10 @@ public class CustomerController  {
     public ModelAndView showError(){
         return new ModelAndView("error");
     }
+    @ExceptionHandler(DuplicatePhoneException.class)
+    public ModelAndView inputNotAcception(){
+        return new ModelAndView("inputNotAcception");
+    }
 
 
     @GetMapping("")
@@ -54,7 +59,7 @@ public class CustomerController  {
         return modelAndView;
     }
     @PostMapping("edit")
-    public ModelAndView edit(@RequestParam Long id, @ModelAttribute Customer customer ){
+    public ModelAndView edit(@RequestParam Long id, @ModelAttribute Customer customer ) throws DuplicatePhoneException {
         customer.setId(id);
         iCustomerService.save(customer);
         return new ModelAndView("redirect:/customers");
@@ -65,7 +70,7 @@ public class CustomerController  {
         return modelAndView;
     }
     @PostMapping("create")
-    public ModelAndView create(@Validated @ModelAttribute Customer customer, BindingResult bindingResult){
+    public ModelAndView create(@Validated @ModelAttribute Customer customer, BindingResult bindingResult) throws DuplicatePhoneException{
         if (bindingResult.hasFieldErrors()){
             return new ModelAndView("create","customer",customer);}
         else {

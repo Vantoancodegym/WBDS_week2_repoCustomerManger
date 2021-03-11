@@ -1,9 +1,11 @@
 package vantoanProject.service.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vantoanProject.exception.DuplicatePhoneException;
 import vantoanProject.exception.NotFoundException;
 import vantoanProject.model.Customer;
 import vantoanProject.model.Province;
@@ -37,8 +39,12 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer save(Customer customer) throws DuplicatePhoneException {
+        try {
+            return customerRepository.save(customer);
+        }catch (DataIntegrityViolationException e){
+            throw new DuplicatePhoneException();
+        }
     }
 
     @Override

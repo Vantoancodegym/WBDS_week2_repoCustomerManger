@@ -16,6 +16,7 @@ public class Customer {
     private String name;
     @NotEmpty
     @Pattern(regexp="(^$|[0-9]{10})", message = "phone is invalid")
+    @Column(unique = true)
     private String phone;
     @ManyToOne
     private Province province;

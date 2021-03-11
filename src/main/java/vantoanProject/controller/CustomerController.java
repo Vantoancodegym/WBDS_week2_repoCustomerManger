@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +40,6 @@ public class CustomerController  {
     public ModelAndView inputNotAcception(){
         return new ModelAndView("inputNotAcception");
     }
-
 
     @GetMapping("")
     public ModelAndView showAll(@PageableDefault(size = 3)Pageable pageable) throws NotFoundException {

@@ -10,24 +10,34 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import vantoanProject.exception.NotFoundException;
 import vantoanProject.model.Customer;
 import vantoanProject.model.Province;
 import vantoanProject.service.customer.ICustomerService;
 import vantoanProject.service.province.IProvinceService;
 
+
 import java.util.List;
 
 @Controller
 @RequestMapping("customers")
-public class CustomerController {
+public class CustomerController  {
     @Qualifier("cus")
     @Autowired
     private ICustomerService iCustomerService;
     @Qualifier("prov")
     @Autowired
     private IProvinceService iProvinceService;
+
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView showError(){
+        return new ModelAndView("error");
+    }
+
+
     @GetMapping("")
-    public ModelAndView showAll(@PageableDefault(size = 3)Pageable pageable){
+    public ModelAndView showAll(@PageableDefault(size = 3)Pageable pageable) throws NotFoundException {
         Page<Customer> list= iCustomerService.findAll(pageable);
         ModelAndView modelAndView= new ModelAndView("home","list",list);
         return modelAndView;
@@ -36,8 +46,9 @@ public class CustomerController {
     public List<Province> getListProvices(){
         return iProvinceService.findAll();
     }
+
     @GetMapping("edit")
-    public ModelAndView showFormEdit(@RequestParam Long id){
+    public ModelAndView showFormEdit(@RequestParam Long id) throws NotFoundException{
         Customer customer=iCustomerService.findById(id);
         ModelAndView modelAndView=new ModelAndView("edit","customer",customer);
         return modelAndView;

@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -28,8 +29,10 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import vantoanProject.aspect.Mylogger;
 import vantoanProject.fomatter.ProvinceFomatter;
 import vantoanProject.service.province.IProvinceService;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,6 +46,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories("vantoanProject.repository")
 @EnableSpringDataWebSupport
+@EnableAspectJAutoProxy
+
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -130,12 +135,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return properties;
     }
     @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource =
-                new ResourceBundleMessageSource();
-        messageSource.setBasenames("ValidationMessages");
-        return messageSource;
-    }
+    public Mylogger myLogger(){return new Mylogger();}
 
 }
 

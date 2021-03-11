@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vantoanProject.exception.NotFoundException;
 import vantoanProject.model.Customer;
 import vantoanProject.model.Province;
 import vantoanProject.repository.CustomerRepository;
@@ -28,8 +29,11 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAllQuery(pageable);
+    public Page<Customer> findAll(Pageable pageable) throws NotFoundException {
+        Page<Customer> customers;
+        customers= customerRepository.findAllQuery(pageable);
+        if (customers.getSize()==0) throw new NotFoundException();
+        else return customers;
     }
 
     @Override
@@ -38,8 +42,10 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public Customer findById(Long id) {
-        return customerRepository.findOne(id);
+    public Customer findById(Long id) throws NotFoundException {
+        Customer customer= customerRepository.findOne(id);
+        if (customer==null) throw new NotFoundException();
+        else return customer;
     }
 
     @Override
